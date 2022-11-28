@@ -4,8 +4,9 @@ on:
   repository_dispatch:
     types: [check_numba_python_compatibility]
 jobs:
-  create_issue:
+  check_numba_python_compatibility:
     runs-on: ubuntu-latest
+    environment: API_Access
     permissions:
       issues: write 
     steps:
