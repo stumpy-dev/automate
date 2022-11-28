@@ -14,8 +14,8 @@ jobs:
         run: |
           curl --request POST \
           --url https://api.github.com/repos/TDAmeritrade/stumpy/issues \
-          --header 'authorization: bearer ${{ secrets.ACCESS_TOKEN }}' \
-          --header 'content-type: application/json' \
+          --header 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
+          --header 'Content-Type: application/json' \
           --data '{
             "title": "Test",
             "body": "This issue was automatically created by the stumpy-bot. \n\n"
