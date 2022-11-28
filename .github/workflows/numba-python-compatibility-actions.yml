@@ -14,7 +14,7 @@ jobs:
         run: |
           curl --request POST \
           --url https://api.github.com/repos/TDAmeritrade/stumpy/issues \
-          --header 'authorization: token ${{ secrets.ACCESS_TOKEN }}' \
+          --header 'authorization: bearer ${{ secrets.ACCESS_TOKEN }}' \
           --header 'content-type: application/json' \
           --data '{
             "title": "Test",
