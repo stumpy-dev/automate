@@ -23,21 +23,12 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: TDAmeritrade/stumpy
-      - name: Create New STUMPY Issue Using REST API
-        run: |
-          curl --request POST \
-          --url https://api.github.com/repos/TDAmeritrade/stumpy/issues \
-          --header 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
-          --header 'Content-Type: application/json' \
-          --data '{
-            "title": "Test: Please ignore",
-            "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version ${{ env.python-version }} (see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-            }' \
-          --fail
-        shell: bash
       - name: Install STUMPY And Other Dependencies
         run: python -m pip install --editable .[ci]
-        shell: bash 
+        shell: bash
+      - name: Run STUMPY Unit Tests
+        run: ./test.sh unit
+        shell: bash
       - name: Create New STUMPY Issue Using REST API
         run: |
           curl --request POST \
