@@ -1,4 +1,4 @@
-name: Run Scheduled Workflow And Create Issue When Numba Is Compatible With New Python Version
+name: Numba-Python Compatibility Check
 on:
   workflow_dispatch:
   repository_dispatch:
