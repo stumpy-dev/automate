@@ -15,7 +15,7 @@ jobs:
       - name: Set Up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ python-version }}
+          python-version: ${{ env.python-version }}
       - name: Display Python Version
         run: python -c "import sys; print(sys.version)"
         shell: bash
@@ -34,6 +34,7 @@ jobs:
       #     --header 'Content-Type: application/json' \
       #     --data '{
       #       "title": "Test: Please ignore",
-      #       "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version ${{ python-version }} (see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+      #       "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version ${{ env.python-version }} (see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
       #       }' \
       #     --fail
+      #   shell: bash
