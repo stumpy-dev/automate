@@ -17,7 +17,8 @@ jobs:
           --header 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
           --header 'Content-Type: application/json' \
           --data '{
-            "title": "Test",
-            "body": "This issue was automatically created by the stumpy-bot. \n\n"
+            "title": "Test: Please ignore",
+            "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version X.Y (see [validation workflow](https://github.com/${{ GITHUB_REPOSITORY }}/actions/runs/${{ GITHUB_RUN_ID }})
+"
             }' \
           --fail
