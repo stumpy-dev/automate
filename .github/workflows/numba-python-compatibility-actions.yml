@@ -24,10 +24,12 @@ jobs:
         with:
           repository: TDAmeritrade/stumpy
       - name: Install STUMPY And Other Dependencies
-        run: python -m pip install --editable .[ci] 2> stderr.txt
+        run: |
+        python -m pip install --editable .[ci] 2> stderr.txt || true
         shell: bash
       - name: Check Installation
         run: |
+          cat stderr.txt
           if [[ `grep "RuntimeError" stderr.txt | wc -l` gt "0" ]]; then
             exit 1
           else
