@@ -29,11 +29,11 @@ jobs:
       - name: Check installation
         run: |
           if [[ `grep RuntimeError stderr.txt | wc -l` gt "0" ]]; then \
-            echo "Installation Failed"
-            exit 0
-          else
-            echo "Installation Succeeded"
-            exit 1
+            echo "Installation Failed" \
+            exit 0 \
+          else \
+            echo "Installation Succeeded" \
+            exit 1 \
           fi
       - name: Run STUMPY Unit Tests
         if: failure()
