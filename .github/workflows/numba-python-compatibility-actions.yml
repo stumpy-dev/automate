@@ -24,8 +24,7 @@ jobs:
         with:
           repository: TDAmeritrade/stumpy
       - name: Install STUMPY And Other Dependencies
-        run: |
-        python -m pip install --editable .[ci]
+        run: python -m pip install --editable .[ci]
         shell: bash
       - name: Run STUMPY Unit Tests
         run: ./test.sh unit
