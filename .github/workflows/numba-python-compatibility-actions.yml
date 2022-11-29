@@ -24,7 +24,15 @@ jobs:
         with:
           repository: TDAmeritrade/stumpy
       - name: Install STUMPY And Other Dependencies
-        run: python -m pip install --editable .[ci]
+        run: python -m pip install --editable .[ci] 2> stderr.txt
+        shell: bash
+      - name: Check Installation
+        run: |
+          if [[ `grep "RuntimeError" stderr.txt | wc -l` gt "0" ]]; then
+            exit 1
+          else
+            echo "STUMPY and dependencies were successfully installed on Python ${{ env.python-version}}"
+          fi
         shell: bash
       - name: Run STUMPY Unit Tests
         run: ./test.sh unit
