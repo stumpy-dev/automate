@@ -28,7 +28,7 @@ jobs:
         shell: bash
       - name: Check installation
         run: |
-          if [[ `grep RuntimeError stderr.txt | wc -l` gt "0" ]]; then \
+          if [[ `grep RuntimeError stderr.txt | wc -l` -gt "0" ]]; then \
             echo "Installation Failed" \
             exit 0 \
           else \
