@@ -6,7 +6,7 @@ on:
 jobs:
   check_numba_python_compatibility:
     env:
-      python-version: '3.12'
+      req-python-version: '3.12'
     runs-on: ubuntu-latest
     environment: API_Access
     permissions:
@@ -23,14 +23,15 @@ jobs:
           python -c "import sys; print(sys.version)"
           echo "version=$(python setup.py --version)" >> GITHUB_OUTPUT
         shell: bash
-      - name: Compare Installed Python Version Versus Required
-        if: startsWith(${{ steps.python.version }}, ${{ env.python-version }})
-        run: echo "HERE"
-        shell: bash
-      #- name: Checkout STUMPY
-      #  uses: actions/checkout@v3
-      #  with:
-      #    repository: TDAmeritrade/stumpy
+      #- name: Compare Installed Python Version Versus Required
+      #  if: startsWith(${{ steps.python.version }}, ${{ env.req-python-version }})
+      #  run: echo "HERE"
+      #  shell: bash
+      - name: Checkout STUMPY
+        uses: actions/checkout@v3
+        with:
+          repository: TDAmeritrade/stumpy
+        if: startsWith(${{ steps.python.version }}, ${{ env.req-python-version }})
       #- name: Install STUMPY And Other Dependencies
       #  run: python -m pip install --editable .[ci] 2> stderr.txt || true
       #  shell: bash
