@@ -34,34 +34,36 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: TDAmeritrade/stumpy
-      #- name: Install STUMPY And Other Dependencies
-      #  run: python -m pip install --editable .[ci] 2> stderr.txt || true
-      #  shell: bash
-      #- name: Check installation
-      #  run: |
-      #    if [[ `grep RuntimeError stderr.txt | wc -l` -gt "0" ]]; then
-      #      echo "Installation failed (gracefully)"
-      #      cat stderr.txt
-      #      exit 0
-      #    else
-      #      echo "Installation succeeded on Python ${{ env.python-version }}"
-      #      exit 1
-      #    fi
-      #- name: Run STUMPY Unit Tests
-      #  id: unittests
-      #  if: failure()
-      #  run: ./test.sh unit
-      #  shell: bash
-      #- name: Create New STUMPY Issue Using REST API
-      #  if: ${{ failure() && steps.unittests.conclusion != 'failure' }}
-      #  run: |
-      #    curl --request POST \
-      #    --url https://api.github.com/repos/TDAmeritrade/stumpy/issues \
-      #    --header 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
-      #    --header 'Content-Type: application/json' \
-      #    --data '{
-      #      "title": "Numba Python Version ${{ env.python-version }} Compatibility Update",
-      #      "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version ${{ env.python-version }} (see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-      #      }' \
-      #    --fail
-      #  shell: bash
+      - name: Install STUMPY And Other Dependencies
+        if: "startsWith(steps.python.outputs.version, env.req-python-version)"
+        run: python -m pip install --editable .[ci] 2> stderr.txt || true
+        shell: bash
+      - name: Check installation
+        if: "startsWith(steps.python.outputs.version, env.req-python-version)"
+        run: |
+          if [[ `grep RuntimeError stderr.txt | wc -l` -gt "0" ]]; then
+            echo "Installation failed (gracefully)"
+            cat stderr.txt
+            exit 0
+          else
+            echo "Installation succeeded on Python ${{ env.python-version }}"
+            exit 1
+          fi
+      - name: Run STUMPY Unit Tests
+        id: unittests
+        if: failure()
+        run: ./test.sh unit
+        shell: bash
+      - name: Create New STUMPY Issue Using REST API
+        if: if: "startsWith(steps.python.outputs.version, env.req-python-version)" && ${{ failure() && steps.unittests.conclusion != 'failure' }}
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/TDAmeritrade/stumpy/issues \
+          --header 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --data '{
+            "title": "Numba Python Version ${{ env.python-version }} Compatibility Update",
+            "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version ${{ env.python-version }} (see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            }' \
+          --fail
+        shell: bash
