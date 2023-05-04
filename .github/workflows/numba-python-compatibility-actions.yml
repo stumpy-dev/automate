@@ -23,8 +23,8 @@ jobs:
         run: |
           echo "Python installation failed (gracefully)"
           exit 0
-      - name: Check Python Failed Installation
-        if: ${{ steps.pyinstall.conclusion == 'failure' }}
+      - name: Check Python Successful Installation
+        if: ${{ steps.pyinstall.conclusion != 'failure' }}
         run: |
           echo "Python installation succeeded"
           exit 1
