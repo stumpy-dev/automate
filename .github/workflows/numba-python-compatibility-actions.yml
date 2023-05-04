@@ -16,7 +16,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ env.python-version }}
-      - name: Check Python Installation
         if: failure()
         run: |
           echo "Python installation failed (gracefully)"
