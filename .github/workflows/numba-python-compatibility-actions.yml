@@ -18,7 +18,14 @@ jobs:
           python-version: ${{ env.python-version }}
         continue-on-error: true
       - name: Display Python Version
-        run: python -c "import sys; print(sys.version)"
+        id: python
+        run: |
+          python -c "import sys; print(sys.version)"
+          echo "version=$(python setup.py --version)" >> GITHUB_OUTPUT
+        shell: bash
+      - name: Compare Installed Python Version Versus Required
+        if: startsWith(${{ steps.python.version }}, ${{ env.python-version }})
+        run: echo "HERE"
         shell: bash
       #- name: Checkout STUMPY
       #  uses: actions/checkout@v3
