@@ -25,7 +25,7 @@ jobs:
         shell: bash
       - name: Compare Installed Python Version Versus Required
         #if: startsWith(${{ steps.python.outputs.version }}, ${{ env.req-python-version }})
-        if: "startsWith(steps.python.outputs.version, env.req-python-version)"
+        if: "!startsWith(steps.python.outputs.version, env.req-python-version)"
         run: |
           echo ${{ steps.python.outputs.version }}
           echo ${{ env.req-python-version }}
