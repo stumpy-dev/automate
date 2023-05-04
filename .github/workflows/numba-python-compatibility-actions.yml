@@ -55,7 +55,7 @@ jobs:
         run: ./test.sh unit
         shell: bash
       - name: Create New STUMPY Issue Using REST API
-        if: if: "startsWith(steps.python.outputs.version, env.req-python-version)" && ${{ failure() && steps.unittests.conclusion != 'failure' }}
+        if: "startsWith(steps.python.outputs.version, env.req-python-version)" && ${{ failure() && steps.unittests.conclusion != 'failure' }}
         run: |
           curl --request POST \
           --url https://api.github.com/repos/TDAmeritrade/stumpy/issues \
