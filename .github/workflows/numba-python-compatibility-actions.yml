@@ -21,7 +21,7 @@ jobs:
         id: python
         run: |
           python -c "import sys; print(sys.version)"
-          echo "version=$(python -c 'import sys; print(sys.version)' | awk '{print $1}')\n" >> $GITHUB_OUTPUT
+          echo "version=$(python -c 'import sys; print(sys.version)' | awk '{print $1}')" >> $GITHUB_OUTPUT
         shell: bash
       - name: Check Required Python Version
         if: "!startsWith(steps.python.outputs.version, env.req-python-version)"
