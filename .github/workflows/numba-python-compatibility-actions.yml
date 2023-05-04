@@ -27,6 +27,7 @@ jobs:
         if: "!startsWith(steps.python.outputs.version, env.req-python-version)"
         run: |
           echo "Expected Python version ${{ env.req-python-version }} but found version ${{ steps.python.outputs.version }} instead :("
+          echo 'Please see "Set Up Python" step above and confirm that the required Python version is available'
         shell: bash
       - name: Checkout STUMPY
         if: "startsWith(steps.python.outputs.version, env.req-python-version)"
