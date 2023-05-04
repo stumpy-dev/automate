@@ -32,6 +32,7 @@ jobs:
         run: python -m pip install --editable .[ci] 2> stderr.txt || true
         shell: bash
       - name: Check installation
+        id: installation
         run: |
           if [[ `grep RuntimeError stderr.txt | wc -l` -gt "0" ]]; then
             echo "Installation failed (gracefully)"
@@ -43,7 +44,7 @@ jobs:
           fi
       - name: Run STUMPY Unit Tests
         id: unittests
-        if: failure()
+        if: ${{ steps.installation.conclusion == 'failure' }}
         run: ./test.sh unit
         shell: bash
       - name: Create New STUMPY Issue Using REST API
