@@ -16,6 +16,17 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ env.python-version }}
+      - name: Check Python Installation
+        if: failure()
+        run: |
+          if [[ `grep RuntimeError stderr.txt | wc -l` -gt "0" ]]; then
+            echo "Python installation failed (gracefully)"
+            cat stderr.txt
+            exit 0
+          else
+            echo "Python installation succeeded on Python ${{ env.python-version }}"
+            exit 1
+          fi
       - name: Display Python Version
         run: python -c "import sys; print(sys.version)"
         shell: bash
