@@ -13,14 +13,21 @@ jobs:
       issues: write 
     steps:
       - name: Set Up Python
+        id: pyinstall
         uses: actions/setup-python@v4
         with:
           python-version: ${{ env.python-version }}
         continue-on-error: true
-      - name: Check Python Installation
+      - name: Check Python Failed Installation
+        if: ${{ steps.pyinstall.conclusion == 'failure' }}
         run: |
           echo "Python installation failed (gracefully)"
           exit 0
+      - name: Check Python Failed Installation
+        if: ${{ steps.pyinstall.conclusion == 'failure' }}
+        run: |
+          echo "Python installation succeeded"
+          exit 1
       - name: Display Python Version
         run: python -c "import sys; print(sys.version)"
         shell: bash
@@ -29,10 +36,12 @@ jobs:
         with:
           repository: TDAmeritrade/stumpy
       - name: Install STUMPY And Other Dependencies
+        id: dependencies
         run: python -m pip install --editable .[ci] 2> stderr.txt || true
         shell: bash
       - name: Check installation
         id: installation
+        # if: ${{ steps.dependencies.conclusion != 'failure' }}
         run: |
           if [[ `grep RuntimeError stderr.txt | wc -l` -gt "0" ]]; then
             echo "Installation failed (gracefully)"
