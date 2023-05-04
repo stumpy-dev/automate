@@ -49,7 +49,7 @@ jobs:
         shell: bash
       - name: Create New STUMPY Issue Using REST API
         # if: failure()
-        if: ${{ failure() && steps.unittests.conclusion != 'failure' }}
+        if: ${{ steps.unittests.conclusion != 'failure' }}
         run: |
           curl --request POST \
           --url https://api.github.com/repos/TDAmeritrade/stumpy/issues \
