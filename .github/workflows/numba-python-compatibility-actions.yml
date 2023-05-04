@@ -23,12 +23,12 @@ jobs:
           python -c "import sys; print(sys.version)"
           echo "version=$(python -c 'import sys; print(sys.version)' | awk '{print $1}')\n" >> $GITHUB_OUTPUT
         shell: bash
-      #- name: Compare Installed Python Version Versus Required
-      #  if: "startsWith(steps.python.outputs.version, env.req-python-version)"
-      #  run: |
-      #    echo ${{ steps.python.outputs.version }}
-      #    echo ${{ env.req-python-version }}
-      #  shell: bash
+      - name: Check Required Python Version
+        if: "!startsWith(steps.python.outputs.version, env.req-python-version)"
+        run: |
+          echo "Require Python version ${{ env.req-python-version }} expected but\n"
+          echo "found version ${{ steps.python.outputs.version }} instead :(\n"
+        shell: bash
       - name: Checkout STUMPY
         if: "startsWith(steps.python.outputs.version, env.req-python-version)"
         uses: actions/checkout@v3
