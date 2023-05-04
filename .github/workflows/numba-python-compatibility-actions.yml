@@ -18,7 +18,6 @@ jobs:
           python-version: ${{ env.python-version }}
         continue-on-error: true
       - name: Check Python Installation
-        if: failure()
         run: |
           echo "Python installation failed (gracefully)"
           exit 0
