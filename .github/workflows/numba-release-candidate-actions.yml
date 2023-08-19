@@ -6,7 +6,7 @@ on:
 jobs:
   check_numba_release_candidate:
     runs-on: ubuntu-latest
-  steps:
+    steps:
       - uses: actions/checkout@v3
       - name: Set Up Python
         uses: actions/setup-python@v4
