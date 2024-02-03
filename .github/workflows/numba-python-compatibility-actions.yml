@@ -13,7 +13,7 @@ jobs:
       issues: write 
     steps:
       - name: Set Up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.req-python-version }}
         continue-on-error: true
@@ -31,7 +31,7 @@ jobs:
         shell: bash
       - name: Checkout STUMPY
         if: "startsWith(steps.python.outputs.version, env.req-python-version)"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: TDAmeritrade/stumpy
       - name: Install STUMPY And Other Dependencies
