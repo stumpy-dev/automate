@@ -6,7 +6,7 @@ on:
 jobs:
   check_numba_python_compatibility:
     env:
-      req-python-version: '3.12'
+      req-python-version: '3.13'
     runs-on: ubuntu-latest
     environment: API_Access
     permissions:
