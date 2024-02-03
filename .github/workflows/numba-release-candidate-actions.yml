@@ -1,4 +1,4 @@
-name: Numba-Python Compatibility Check
+name: Numba Release Candidate Check
 on:
   workflow_dispatch:
   repository_dispatch:
