@@ -4,7 +4,7 @@ on:
   repository_dispatch:
     types: [check_url_links]
 jobs:
-  check_links:
+  check_url_links:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
