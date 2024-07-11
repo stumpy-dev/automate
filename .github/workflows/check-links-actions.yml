@@ -1,8 +1,8 @@
-name: Numba Release Candidate Check
+name: Check URL Links
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [check_links]
+    types: [check_url_links]
 jobs:
   check_links:
     runs-on: ubuntu-latest
@@ -26,6 +26,6 @@ jobs:
       - name: Install STUMPY And Other Dependencies
         run: python -m pip install --editable .[ci]
         shell: bash
-      - name: Check Links
+      - name: Check URL Links
         run: ./test.sh links
         shell: bash
