@@ -6,7 +6,7 @@ on:
 jobs:
   check_numba_python_compatibility:
     env:
-      req-python-version: '3.13'
+      req-python-version: '3.14'
     runs-on: ubuntu-latest
     environment: API_Access
     permissions:
@@ -46,7 +46,7 @@ jobs:
             cat stderr.txt
             exit 0
           else
-            echo "Installation succeeded on Python ${{ env.python-version }}"
+            echo "Installation succeeded on Python ${{ env.req-python-version }}"
             exit 1
           fi
       - name: Run STUMPY Unit Tests
