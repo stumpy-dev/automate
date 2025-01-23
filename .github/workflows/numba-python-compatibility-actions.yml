@@ -62,8 +62,8 @@ jobs:
           --header 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
           --header 'Content-Type: application/json' \
           --data '{
-            "title": "Numba Python Version ${{ env.python-version }} Compatibility Update",
-            "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version ${{ env.python-version }} (see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            "title": "Numba Python Version ${{ env.req-python-version }} Compatibility Update",
+            "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version ${{ env.req-python-version }} (see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
             }' \
           --fail
         shell: bash
