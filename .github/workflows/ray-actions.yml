@@ -13,7 +13,7 @@ jobs:
       - name: Checkout STUMPY
         uses: actions/checkout@v4
         with:
-          repository: TDAmeritrade/stumpy
+          repository: stumpy-dev/stumpy
       - name: Get Required Python Version
         id: python
         run: |
@@ -34,7 +34,7 @@ jobs:
       - name: Checkout STUMPY Again
         uses: actions/checkout@v4
         with:
-          repository: TDAmeritrade/stumpy
+          repository: stumpy-dev/stumpy
       - name: Install STUMPY And Other Dependencies
         run: python -m pip install --editable .[ci]
         shell: bash

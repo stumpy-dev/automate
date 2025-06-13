@@ -33,7 +33,7 @@ jobs:
         if: "startsWith(steps.python.outputs.version, env.req-python-version)"
         uses: actions/checkout@v4
         with:
-          repository: TDAmeritrade/stumpy
+          repository: stumpy-dev/stumpy
       - name: Install STUMPY And Other Dependencies
         if: "startsWith(steps.python.outputs.version, env.req-python-version)"
         run: python -m pip install --editable .[ci] 2> stderr.txt || true
@@ -58,7 +58,7 @@ jobs:
         if: ${{ failure() && steps.unittests.conclusion != 'failure' }}
         run: |
           curl --request POST \
-          --url https://api.github.com/repos/TDAmeritrade/stumpy/issues \
+          --url https://api.github.com/repos/stumpy-dev/stumpy/issues \
           --header 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
           --header 'Content-Type: application/json' \
           --data '{

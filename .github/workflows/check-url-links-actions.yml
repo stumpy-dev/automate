@@ -22,7 +22,7 @@ jobs:
         if: "startsWith(steps.python.outputs.version, env.req-python-version)"
         uses: actions/checkout@v4
         with:
-          repository: TDAmeritrade/stumpy
+          repository: stumpy-dev/stumpy
       - name: Install STUMPY And Other Dependencies
         run: python -m pip install --editable .[ci]
         shell: bash
