@@ -17,7 +17,7 @@ jobs:
       - name: Get Required Python Version
         id: python
         run: |
-          python -m pip install requests packaging
+          python -m pip install pandas packaging
           echo "version=$(python ./ray_python_version.py)" >> $GITHUB_OUTPUT
         shell: bash
       - uses: actions/checkout@v4
