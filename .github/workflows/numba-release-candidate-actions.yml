@@ -11,7 +11,7 @@ jobs:
       - name: Set Up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ '3.11' }}
+          python-version: ${{ '3.12' }}
       - name: Display Python Version
         run: python -c "import sys; print(sys.version)"
         shell: bash
