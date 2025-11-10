@@ -45,10 +45,15 @@ def pattern_found(pattern, html):
 
 if __name__ == '__main__':
     tutorial_urls = get_tutorial_urls()
+    found = False
     for url in tutorial_urls:
         html = url_to_html(url)
-        # Check for various errors, warnings
+        # Add additional errors, warnings to this list
         patterns = [r'HTTPError', r'FutureWarning:']
         for pattern in patterns:
             if pattern_found(pattern, html):
+                found = True
                 print(f'"{pattern}" found in "{url}"')
+
+    if found:
+        raise ValueError("One or more warnings/errors were found")
