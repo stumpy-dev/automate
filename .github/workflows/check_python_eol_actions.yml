@@ -1,0 +1,27 @@
+name: Check Python Version End of Life
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [check_python_eol]
+jobs:
+  check_url_links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+      - name: Display Python Version
+        run: python -c "import sys; print(sys.version)"
+        shell: bash
+      - name: Checkout STUMPY
+        if: "startsWith(steps.python.outputs.version, env.req-python-version)"
+        uses: actions/checkout@v4
+        with:
+          repository: stumpy-dev/stumpy
+      - name: Check Python Version End of Life
+        run: |
+          if [[ `./min_version.py | grep python | grep Mismatch | wc -l` -gt "0" ]]; then
+            echo "Bump minimum version due to Python end-of-life"
+            exit 1
+          fi
+        shell: bash
