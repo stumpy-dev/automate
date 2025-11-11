@@ -1,0 +1,20 @@
+name: Check Tutorials for Warnings and Errors
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [check_tutorials]
+jobs:
+  check_python_version_eol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ '3.12' }}
+      - name: Display Python Version
+        run: python -c "import sys; print(sys.version)"
+        shell: bash
+      - name: Check Tutorials for Warnings and Errors
+        run: python check_tutorials.py
+        shell: bash
