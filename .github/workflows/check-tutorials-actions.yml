@@ -4,7 +4,7 @@ on:
   repository_dispatch:
     types: [check_tutorials]
 jobs:
-  check_python_version_eol:
+  check_tutorials:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
