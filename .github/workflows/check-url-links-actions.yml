@@ -1,8 +1,8 @@
 name: Check URL Links
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: [check_url_links]
+  schedule:
+    - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 jobs:
   check_url_links:
     runs-on: ubuntu-latest

@@ -1,8 +1,8 @@
 name: Numba Release Candidate Check
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: [check_numba_release_candidate]
+  schedule:
+    - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 jobs:
   check_numba_release_candidate:
     runs-on: ubuntu-latest

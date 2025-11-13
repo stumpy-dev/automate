@@ -1,8 +1,6 @@
 name: Check Python Version End of Life
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: [check_python_eol]
   schedule:
     - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 jobs:

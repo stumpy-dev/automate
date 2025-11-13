@@ -1,8 +1,8 @@
 name: Check Ray
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: [check_ray]
+  schedule:
+    - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 jobs:
   check_ray:
     runs-on: ${{ matrix.os }}

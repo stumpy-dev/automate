@@ -25,15 +25,52 @@ In your repository of interest:
 6. Specify an environment variable name as `ACCESS_TOKEN` and paste your PAT from 
 7. Access this environment in your workfow via `environment: API_Access` and reference the secret via `${{ secrets.ACCESS_TOKEN }}`
 
-# Triggering the Workflow
+# Allow Manual Workflow Triggering
 
-At cron-job.org:
+In the workflow, add:
 
-1. Choose an appropirate title
-2. Set the dispatch URL (e.g., `https://api.github.com/repos/stumpy-dev/automate/dispatches`)
-3. Select an execution schedule
-4. Click on the "Advanced" tab
-5. Add a `Accept:application/vnd.github.v3+json` key-value header 
-6. Add a `Authorization:token <Personal_Access_Token>` key-value header 
-7. Change the "Request Method" to "POST"
-8. And add a `{"event_type": "check_numba_python_compatibility"}` Request body
+```
+on:
+  workflow_dispatch:
+```
+
+This will allow you to manually trigger the workflow within the Actions tab of Github
+
+# Schedule Cron Job within Github Actions
+
+In the workflow, add:
+
+```
+on:
+  # workflow_dispatch:
+  schedule:
+    - cron: '0 14 * * *'  # 2pm UTC == 9am EST
+```
+
+~~
+# Triggering the Workflow Externally Via Github API
+
+In the workflow, specify the `event_type` through the `repository_dispatch` custom event trigger:
+
+```
+on:
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '0 14 * * *'  # 2pm UTC == 9am EST
+  repository_dispatch:
+    types: [check_numba_python_comptability]
+```
+
+Then, this can be triggered through the Github API via cron-job.org:
+
+1. Login to cron-job.org
+2. Create a new cron job
+3. Choose an appropirate title
+4. Set the dispatch URL (e.g., `https://api.github.com/repos/stumpy-dev/automate/dispatches`)
+5. Select an execution schedule
+6. Click on the "Advanced" tab
+7. Add a `Accept:application/vnd.github.v3+json` key-value header 
+8. Add a `Authorization:token <Personal_Access_Token>` key-value header 
+9. Change the "Request Method" to "POST"
+10. And add a `{"event_type": "check_numba_python_compatibility"}` Request body
+~~
