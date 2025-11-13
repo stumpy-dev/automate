@@ -4,7 +4,7 @@ on:
   repository_dispatch:
     types: [check_python_eol]
   schedule:
-    - cron: '0 9 * * *'
+    - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 jobs:
   check_python_version_eol:
     runs-on: ubuntu-latest
