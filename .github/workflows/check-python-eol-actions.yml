@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [check_python_eol]
+  schedule:
+    - cron: '0 9 * * *'
 jobs:
   check_python_version_eol:
     runs-on: ubuntu-latest
