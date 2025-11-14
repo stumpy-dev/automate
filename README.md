@@ -47,7 +47,7 @@ on:
     - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 ```
 
-~~
+<del>
 # Triggering the Workflow Externally Via Github API
 
 In the workflow, specify the `event_type` through the `repository_dispatch` custom event trigger:
@@ -73,4 +73,4 @@ Then, this can be triggered through the Github API via cron-job.org:
 8. Add a `Authorization:token <Personal_Access_Token>` key-value header 
 9. Change the "Request Method" to "POST"
 10. And add a `{"event_type": "check_numba_python_compatibility"}` Request body
-~~
+</del>
