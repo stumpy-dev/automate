@@ -22,8 +22,10 @@ jobs:
       - name: Upgrade Pip
         run: python -m pip install --upgrade pip
         shell: bash
-      - name: Install STUMPY And Other Dependencies
-        run: python -m pip install stumpy[ci]
+      - name: Install STUMPY Dependencies
+        run: |
+             python -m pip install stumpy[ci]
+             python -m pip install polars
         shell: bash
       - name: Install OpenMP
         run: |
