@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 jobs:
-  generate_matrix:
+  generate_python_matrix:
     runs-on: ubuntu-latest
     outputs:
       python-versions: ${{ steps.set-matrix.outputs.python_versions }}
@@ -17,6 +17,7 @@ jobs:
           # Output the JSON string
           echo "python_versions=${PYTHON_VERSIONS}" >> $GITHUB_OUTPUT
   check_pypi_wheels:
+    needs: generate_python_matrix
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
