@@ -4,12 +4,25 @@ on:
   schedule:
     - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 jobs:
+  generate_matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      python-versions: ${{ steps.set-matrix.outputs.python_versions }}
+    steps:
+      - name: Generate Python Versions
+        id: set-matrix
+        run: |
+          PYTHON_VERSIONS='["3.10", "3.11", "3.12", "3.13"]'
+          
+          # Output the JSON string
+          echo "python_versions=${PYTHON_VERSIONS}" >> $GITHUB_OUTPUT
   check_pypi_wheels:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ['3.10', '3.11', '3.12', '3.13']
+        # python-version: ['3.10', '3.11', '3.12', '3.13']
+        python-version: ${{ fromJSON(needs.generate-matrix.outputs.python_versions) }}
     steps:
       - uses: actions/checkout@v4
       - name: Set Up Python
