@@ -14,7 +14,7 @@ jobs:
           python-version: ${{ '3.12' }}
       - name: Upgrade Pip, Install Minimum Requirements
         run: |
-          python -m pip install --upgrade pip pandas lxml
+          python -m pip install --upgrade pip pandas lxml packaging
         shell: bash
       - name: Display Python Version
         run: python -c "import sys; print(sys.version)"
