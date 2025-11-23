@@ -7,11 +7,22 @@ jobs:
   check_url_links:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout STUMPY
+        uses: actions/checkout@v4
+        with:
+          repository: stumpy-dev/stumpy
+      - name: Upgrade Pip, Install Minimum Requirements
+        run: |
+          python -m pip install --upgrade pip pandas lxml packaging
+        shell: bash
+      - name: Determine Safe Python Version
+        id: get_safe_python
+        run: |
+          echo "safe_python=$(python ./versions.py -mode safe)" >> $GITHUB_OUTPUT
       - name: Set Up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ '3.12' }}
+          python-version: ${{ steps.get_safe_python.outputs.safe_python }}
       - name: Display Python Version
         run: python -c "import sys; print(sys.version)"
         shell: bash
