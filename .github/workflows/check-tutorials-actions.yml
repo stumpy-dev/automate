@@ -29,5 +29,5 @@ jobs:
       - name: Checkout This Repository
         uses: actions/checkout@v4
       - name: Check Tutorials for Warnings and Errors
-        run: python check_tutorials.py
+        run: python ./check_tutorials.py
         shell: bash
