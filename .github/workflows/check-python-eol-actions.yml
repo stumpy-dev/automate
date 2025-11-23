@@ -21,7 +21,7 @@ jobs:
           repository: stumpy-dev/stumpy
       - name: Check Python Version End of Life
         run: |
-          if [[ `python ./version.py | grep python | grep Mismatch | wc -l` -gt "0" ]]; then
+          if [[ `./version.py | grep python | grep Mismatch | wc -l` -gt "0" ]]; then
             echo "Bump minimum version due to Python end-of-life"
             exit 1
           fi
