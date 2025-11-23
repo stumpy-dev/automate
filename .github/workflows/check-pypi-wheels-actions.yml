@@ -4,12 +4,33 @@ on:
   schedule:
     - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 jobs:
+  generate_python_matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      python_versions: ${{ steps.set-matrix.outputs.python_versions }}
+    steps:
+      - name: Checkout STUMPY
+        uses: actions/checkout@v4
+        with:
+          repository: stumpy-dev/stumpy
+      - name: Upgrade Pip, Install Minimum Requirements
+        run: |
+          python -m pip install --upgrade pip pandas lxml
+        shell: bash
+      - name: Generate Python versions
+        id: set-matrix
+        run: |
+          MIN_PYTHON=$(python ./versions.py -mode min | grep python | awk '{print $2}')
+          MAX_PYTHON=$(python ./versions.py -mode max | grep python | awk '{print $2}')
+          echo "python_versions=$(python ./versions.py -mode range $MIN_PYTHON $MAX_PYTHON)" >> $GITHUB_OUTPUT
+        shell: bash
   check_pypi_wheels:
+    needs: generate_python_matrix
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ['3.10', '3.11', '3.12', '3.13']
+        python-version: ${{ fromJSON(needs.generate_python_matrix.outputs.python_versions) }}
     steps:
       - uses: actions/checkout@v4
       - name: Set Up Python
