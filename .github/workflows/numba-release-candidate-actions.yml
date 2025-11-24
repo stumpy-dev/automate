@@ -4,7 +4,26 @@ on:
   schedule:
     - cron: '0 14 * * *'  # 2pm UTC == 9am EST
 jobs:
+  get_safe_python_version:
+    runs-on: ubuntu-latest
+    outputs:
+      latest_python_version: ${{ steps.set-safe.outputs.latest_python_version }}
+    steps:
+      - name: Checkout STUMPY
+        uses: actions/checkout@v4
+        with:
+          repository: stumpy-dev/stumpy
+      - name: Upgrade Pip, Install Minimum Requirements
+        run: |
+          python -m pip install --upgrade pip pandas lxml packaging
+        shell: bash
+      - name: Get Latet Python Version
+        id: set-safe
+        run: |
+          echo "safe_python_version=$(python ./versions.py -mode safe)" >> $GITHUB_OUTPUT
+        shell: bash
   check_numba_release_candidate:
+    needs: get_safe_python
     runs-on: ubuntu-latest
     steps:
       - name: Checkout This Repository
@@ -12,7 +31,7 @@ jobs:
       - name: Set Up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ '3.12' }}
+          python-version: ${{ fromJSON(needs.get_safe_python_version.outputs.safe_python_version) }}
       - name: Display Python Version
         run: python -c "import sys; print(sys.version)"
         shell: bash

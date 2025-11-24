@@ -7,7 +7,7 @@ jobs:
   get_latest_python_version:
     runs-on: ubuntu-latest
     outputs:
-      latest_python_version: ${{ steps.set-matrix.outputs.latest_python_version }}
+      latest_python_version: ${{ steps.set-latest.outputs.latest_python_version }}
     steps:
       - name: Checkout STUMPY
         uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
           python -m pip install --upgrade pip pandas lxml packaging
         shell: bash
       - name: Get Latet Python Version
-        id: set-matrix
+        id: set-latest
         run: |
           echo "latest_python_version=$(python ./versions.py -mode latest)" >> $GITHUB_OUTPUT
         shell: bash
