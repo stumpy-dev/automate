@@ -7,7 +7,7 @@ jobs:
   get_safe_python_version:
     runs-on: ubuntu-latest
     outputs:
-      latest_python_version: ${{ steps.set-safe.outputs.latest_python_version }}
+      safe_python_version: ${{ steps.set-safe.outputs.safe_python_version }}
     steps:
       - name: Checkout STUMPY
         uses: actions/checkout@v4
@@ -17,7 +17,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip pandas lxml packaging
         shell: bash
-      - name: Get Latet Python Version
+      - name: Get Safe Python Version
         id: set-safe
         run: |
           python ./versions.py -mode safe
