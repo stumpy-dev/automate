@@ -20,6 +20,7 @@ jobs:
       - name: Get Latet Python Version
         id: set-safe
         run: |
+          python ./versions.py -mode safe
           echo "safe_python_version=$(python ./versions.py -mode safe)" >> $GITHUB_OUTPUT
         shell: bash
   check_numba_release_candidate:
