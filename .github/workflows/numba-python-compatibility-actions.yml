@@ -23,6 +23,7 @@ jobs:
           echo "latest_python_version=$(python ./versions.py -mode latest)" >> $GITHUB_OUTPUT
         shell: bash
   check_numba_python_compatibility:
+    needs: get_latest_python_version
     env:
       #req-python-version: '3.14'
       req-python-version: ${{ fromJSON(needs.get_latest_python_version.outputs.latest_python_version) }}
