@@ -9,7 +9,7 @@ jobs:
     outputs:
       latest_python_version: ${{ steps.set-matrix.outputs.latest_python_version }}
     steps:
-        - name: Checkout STUMPY
+      - name: Checkout STUMPY
         uses: actions/checkout@v4
         with:
           repository: stumpy-dev/stumpy
