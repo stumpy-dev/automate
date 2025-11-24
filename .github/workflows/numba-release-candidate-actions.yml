@@ -21,7 +21,7 @@ jobs:
         id: set-safe
         run: |
           python ./versions.py -mode safe
-          echo "safe_python_version=\"$(python ./versions.py -mode safe)\"" >> $GITHUB_OUTPUT
+          echo "safe_python_version=$(python ./versions.py -mode safe)" >> $GITHUB_OUTPUT
         shell: bash
   check_numba_release_candidate:
     needs: get_safe_python_version
