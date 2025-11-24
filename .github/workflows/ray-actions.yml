@@ -18,7 +18,7 @@ jobs:
         id: python
         run: |
           python -m pip install pandas packaging lxml
-          echo "version=$(python ./ray_python_version.py)" >> $GITHUB_OUTPUT
+          echo "version=\"$(python ./ray_python_version.py)\"" >> $GITHUB_OUTPUT
         shell: bash
       - uses: actions/checkout@v4
       - name: Set Up Python

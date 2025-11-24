@@ -20,7 +20,7 @@ jobs:
       - name: Get Latest Python Version
         id: set-latest
         run: |
-          echo "latest_python_version=$(python ./versions.py -mode latest)" >> $GITHUB_OUTPUT
+          echo "latest_python_version=\"$(python ./versions.py -mode latest)\"" >> $GITHUB_OUTPUT
         shell: bash
   check_numba_python_compatibility:
     needs: get_latest_python_version

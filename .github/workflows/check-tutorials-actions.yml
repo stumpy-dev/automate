@@ -18,7 +18,7 @@ jobs:
       - name: Determine Safe Python Version
         id: get_safe_python
         run: |
-          echo "safe_python=$(python ./versions.py -mode safe)" >> $GITHUB_OUTPUT
+          echo "safe_python=\"$(python ./versions.py -mode safe)\"" >> $GITHUB_OUTPUT
       - name: Set Up Python
         uses: actions/setup-python@v5
         with:
