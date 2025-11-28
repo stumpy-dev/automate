@@ -56,4 +56,6 @@ if __name__ == '__main__':
                 print(f'"{pattern}" found in "{url}"')
 
     if found:
+        msg = "One or more warnings/errors were found.\n"
+        msg += "Please consider rebuilding the docs on readthedocs.org.\n"
         raise ValueError("One or more warnings/errors were found")
