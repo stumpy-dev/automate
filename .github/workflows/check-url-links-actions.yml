@@ -1,8 +1,8 @@
 name: Check URL Links
 on:
   workflow_dispatch:
-  #schedule:
-  #  - cron: '0 14 * * *'  # 2pm UTC == 9am EST
+  schedule:
+    - cron: '0 14 1,15 * *'  # 2pm UTC == 9am EST, 1st and 15th of every month
 jobs:
   check_url_links:
     runs-on: ubuntu-latest
