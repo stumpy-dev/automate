@@ -2,7 +2,7 @@ name: Numba-Python Compatibility Check
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 14 * * *'  # 2pm UTC == 9am EST
+    - cron: '0 14 1,15 * *'  # 2pm UTC == 9am EST, 1st and 15th every month
 jobs:
   get_latest_python_version:
     runs-on: ubuntu-latest
@@ -74,16 +74,16 @@ jobs:
         if: failure()
         run: ./test.sh unit
         shell: bash
-      - name: Create New STUMPY Issue Using REST API
-        if: ${{ failure() && steps.unittests.conclusion != 'failure' }}
-        run: |
-          curl --request POST \
-          --url https://api.github.com/repos/stumpy-dev/stumpy/issues \
-          --header 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
-          --header 'Content-Type: application/json' \
-          --data '{
-            "title": "Numba Python Version ${{ env.req-python-version }} Compatibility Update",
-            "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version ${{ env.req-python-version }} (see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-            }' \
-          --fail
-        shell: bash
+      # - name: Create New STUMPY Issue Using REST API
+      #   if: ${{ failure() && steps.unittests.conclusion != 'failure' }}
+      #   run: |
+      #     curl --request POST \
+      #     --url https://api.github.com/repos/stumpy-dev/stumpy/issues \
+      #     --header 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
+      #     --header 'Content-Type: application/json' \
+      #     --data '{
+      #       "title": "Numba Python Version ${{ env.req-python-version }} Compatibility Update",
+      #       "body": "This issue was automatically created by the stumpy-bot.\n\n Numba is now compatible with Python version ${{ env.req-python-version }} (see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+      #       }' \
+      #     --fail
+      #   shell: bash
