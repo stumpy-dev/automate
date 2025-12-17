@@ -1,8 +1,8 @@
 name: Numba-Python Compatibility Check
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 14 1,15 * *'  # 2pm UTC == 9am EST, 1st and 15th every month
+  #schedule:
+  #  - cron: '0 14 1,15 * *'  # 2pm UTC == 9am EST, 1st and 15th every month
 jobs:
   get_latest_python_version:
     runs-on: ubuntu-latest
