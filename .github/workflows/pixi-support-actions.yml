@@ -1,4 +1,4 @@
-name: Check URL Links
+name: Run STUMPY Tests with Pixi
 on:
   workflow_dispatch:
 jobs:
