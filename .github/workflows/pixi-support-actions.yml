@@ -8,7 +8,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
-    environment: API_Access
+    environment: PIXI_API_ACCESS
 
     steps:
       - name: Checkout STUMPY
