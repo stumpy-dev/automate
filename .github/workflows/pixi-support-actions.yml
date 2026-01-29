@@ -19,17 +19,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: stumpy-dev/stumpy
-
-      - name: Check token
-        run: |
-          if [ -z "$TOKEN" ]; then
-            echo "ERROR--PREFIX_DEV_TOKEN is empty or not accessible!"
-            exit 1
-          else
-            echo "Token is available (length: ${#TOKEN})"
-          fi
-        env:
-          TOKEN: ${{ secrets.PREFIX_DEV_TOKEN }}
       
       - name: Set Up Pixi
         uses: prefix-dev/setup-pixi@v0.9.4
