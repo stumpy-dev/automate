@@ -25,7 +25,7 @@ jobs:
           auth-host: prefix.dev
           auth-token: ${{ secrets.PREFIX_DEV_TOKEN }}
 
-      - name: Install STUMPY And Other Dependencies
+      - name: Install STUMPY And Other Dependencies with Pixi
         run: pixi install
         shell: bash
 
@@ -34,5 +34,5 @@ jobs:
         shell: bash
         
       - name: Unit Tests
-        run: ./test.sh 
+        run: pixi run ./test.sh 
         shell: bash
