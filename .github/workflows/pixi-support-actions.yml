@@ -7,45 +7,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-
-    environment: PIXI_API_ACCESS
-
+  
     steps:
       - name: Checkout STUMPY
         uses: actions/checkout@v4
         with:
           repository: stumpy-dev/stumpy
-    
-      - name: Determine Safe Python Version
-        id: get_safe_python
-        run: |
-          echo "safe_python=$(python ./versions.py -mode safe)" >> $GITHUB_OUTPUT
-      
-      - name: Set Up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ steps.get_safe_python.outputs.safe_python }}
-      
-      - name: Display Python Version
-        run: python -c "import sys; print(sys.version)"
-        shell: bash
-
-      - name: Checkout STUMPY
-        if: "startsWith(steps.python.outputs.version, env.req-python-version)"
-        uses: actions/checkout@v4
-        with:
-          repository: stumpy-dev/stumpy
-
-      - name: Check token
-        run: |
-          if [ -z "$TOKEN" ]; then
-            echo "ERROR--PREFIX_DEV_TOKEN is empty or not accessible!"
-            exit 1
-          else
-            echo "Token is available (length: ${#TOKEN})"
-          fi
-        env:
-          TOKEN: ${{ secrets.PREFIX_DEV_TOKEN }}
       
       - name: Set Up Pixi
         uses: prefix-dev/setup-pixi@v0.9.4
@@ -59,6 +26,10 @@ jobs:
 
       - name: Install STUMPY And Other Dependencies
         run: pixi install
+        shell: bash
+
+      - name: Show Full Numba Environment
+        run: python -m numba -s
         shell: bash
         
       - name: Unit Tests
