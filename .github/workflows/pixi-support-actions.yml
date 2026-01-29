@@ -16,22 +16,7 @@ jobs:
         with:
           repository: stumpy-dev/stumpy
     
-      - name: Determine Safe Python Version
-        id: get_safe_python
-        run: |
-          echo "safe_python=$(python ./versions.py -mode safe)" >> $GITHUB_OUTPUT
-      
-      - name: Set Up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ steps.get_safe_python.outputs.safe_python }}
-      
-      - name: Display Python Version
-        run: python -c "import sys; print(sys.version)"
-        shell: bash
-
       - name: Checkout STUMPY
-        if: "startsWith(steps.python.outputs.version, env.req-python-version)"
         uses: actions/checkout@v4
         with:
           repository: stumpy-dev/stumpy
