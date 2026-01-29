@@ -1,0 +1,51 @@
+name: Check URL Links
+on:
+  workflow_dispatch:
+jobs:
+  test_with_pixi:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Checkout STUMPY
+        uses: actions/checkout@v4
+        with:
+          repository: stumpy-dev/stumpy
+    
+      - name: Determine Safe Python Version
+        id: get_safe_python
+        run: |
+          echo "safe_python=$(python ./versions.py -mode safe)" >> $GITHUB_OUTPUT
+      
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.get_safe_python.outputs.safe_python }}
+      
+      - name: Display Python Version
+        run: python -c "import sys; print(sys.version)"
+        shell: bash
+
+      - name: Checkout STUMPY
+        if: "startsWith(steps.python.outputs.version, env.req-python-version)"
+        uses: actions/checkout@v4
+        with:
+          repository: stumpy-dev/stumpy
+      
+      - name: Set Up Pixi
+        uses: prefix-dev/setup-pixi@v0.9.4
+        with:
+          pixi-version: v0.62.2
+
+          cache: true
+          auth-host: prefix.dev
+          auth-token: ${{ secrets.PREFIX_DEV_TOKEN }}
+
+      - name: Install STUMPY And Other Dependencies
+        run: pixi install
+        shell: bash
+        
+      - name: Unit Tests
+        run: ./test.sh 
+        shell: bash
