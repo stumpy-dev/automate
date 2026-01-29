@@ -34,5 +34,5 @@ jobs:
         shell: bash
         
       - name: Unit Tests
-        run: pixi run ./test.sh 
+        run: pixi run bash ./test.sh 
         shell: bash
