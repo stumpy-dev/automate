@@ -1,6 +1,6 @@
 name: Check URL Links
 on:
-  workflow_dispatch
+  workflow_dispatch:
 jobs:
   test_with_pixi:
     runs-on: ${{ matrix.os }}
