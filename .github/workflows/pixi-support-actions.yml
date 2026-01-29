@@ -1,8 +1,6 @@
 name: Check URL Links
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 14 1,15 * *'  # 2pm UTC == 9am EST, 1st and 15th of every month
+  workflow_dispatch
 jobs:
   test_with_pixi:
     runs-on: ${{ matrix.os }}
