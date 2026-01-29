@@ -44,6 +44,10 @@ jobs:
       - name: Install STUMPY And Other Dependencies
         run: pixi install
         shell: bash
+
+      - name: Show Full Numba Environment
+        run: python -m numba -s
+        shell: bash
         
       - name: Unit Tests
         run: ./test.sh 
