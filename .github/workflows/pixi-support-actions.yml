@@ -30,7 +30,7 @@ jobs:
         shell: bash
 
       - name: Show Full Numba Environment
-        run: python -m numba -s
+        run: pixi run numba -s
         shell: bash
         
       - name: Unit Tests
