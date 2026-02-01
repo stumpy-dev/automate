@@ -1,0 +1,64 @@
+name: Check pyfftw
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 14 * * *'  # 2pm UTC == 9am EST
+jobs:
+  check_pyfftw:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Checkout STUMPY
+        uses: actions/checkout@v4
+        with:
+          repository: stumpy-dev/stumpy
+      - name: Get Required Python Version
+        id: python
+        run: |
+          python -m pip install pandas packaging lxml
+          echo "version=$(python ./versions.py -pkg pyfftw)" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/checkout@v4
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "${{ steps.python.outputs.version }}"
+      - name: Display Python Version
+        run: python -c "import sys; print(sys.version)"
+        shell: bash
+      - name: Upgrade Pip
+        run: python -m pip install --upgrade pip
+        shell: bash
+      - name: Checkout STUMPY Again
+        uses: actions/checkout@v4
+        with:
+          repository: stumpy-dev/stumpy
+      - name: Install STUMPY And Other Dependencies
+        run: python -m pip install --editable .[ci]
+        shell: bash
+      
+      - name: Install FFTW on Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install libfftw3-dev
+
+      - name: Install FFTW on macOS
+        if: matrix.os == 'macos-latest'
+        run: brew install fftw
+        
+      - name: Install pyfftw
+        run: python -m pip install --upgrade pyfftw
+        shell: bash
+      - name: Run Black
+        run: black --check --diff ./
+        shell: bash
+      - name: Run Flake8
+        run: flake8 ./
+        shell: bash
+      - name: Show Full Numba Environment
+        run: python -m numba -s
+        shell: bash
+      - name: Run Unit Tests for test_sdp.py for pyfftw
+        run: ./test.sh custom 1 tests/test_sdp.py -k "pyfftw"
+        shell: bash
