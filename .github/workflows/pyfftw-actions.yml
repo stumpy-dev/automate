@@ -23,8 +23,6 @@ jobs:
           echo "version=$(python ./versions.py -pkg pyfftw)" >> $GITHUB_OUTPUT
         shell: bash
       
-      - uses: actions/checkout@v4
-      
       - name: Set Up Python
         uses: actions/setup-python@v5
         with:
