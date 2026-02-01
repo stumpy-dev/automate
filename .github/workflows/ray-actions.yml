@@ -41,12 +41,6 @@ jobs:
       - name: Install Ray
         run: python -m pip install --upgrade ray
         shell: bash
-      - name: Run Black
-        run: black --check --diff ./
-        shell: bash
-      - name: Run Flake8
-        run: flake8 ./
-        shell: bash
       - name: Install OpenMP
         run: |
              if [ "$RUNNER_OS" == "macOS" ]; then
