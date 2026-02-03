@@ -40,6 +40,9 @@ jobs:
           python ./versions.py
           if [[ `python ./versions.py | grep python | grep Mismatch | wc -l` -gt "0" ]]; then
             echo "Bump minimum version due to Python end-of-life"
+            echo "See https://devguide.python.org/versions/#status-of-python-versions"
             exit 1
+          else
+            echo "No action needed. The minimum STUMPY Python version reported above is still supported!"
           fi
         shell: bash
