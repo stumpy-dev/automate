@@ -1,4 +1,4 @@
-name: Check PyPI Wheels
+name: Check Conda-Forge Builds
 on:
   workflow_dispatch:
   schedule:
@@ -24,7 +24,7 @@ jobs:
           MAX_PYTHON=$(python ./versions.py -mode max | grep python | awk '{print $2}')
           echo "python_versions=$(python ./versions.py -mode range $MIN_PYTHON $MAX_PYTHON)" >> $GITHUB_OUTPUT
         shell: bash
-  check_pypi_wheels:
+  check_conda_forge_builds:
     needs: generate_python_matrix
     runs-on: ${{ matrix.os }}
     strategy:
