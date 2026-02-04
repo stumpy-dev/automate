@@ -52,7 +52,7 @@ jobs:
       - name: Prevent STUMPY Source Installation
         run: sed -i.BAK '/^\[tool\.pixi\.activation/,+2d' pyproject.toml && rm -rf pyproject.toml.BAK
         shell: bash
-      - nqme: Display PyProject.toml
+      - name: Display PyProject.toml
         run: cat pyproject.toml
         shell: bash
       - name: Run Unit Tests
