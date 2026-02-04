@@ -56,5 +56,5 @@ jobs:
         run: cat pyproject.toml
         shell: bash
       - name: Run Unit Tests
-        run: pixi run bash ./test.sh
+        run: pixi run bash ./test.sh unit
         shell: bash
