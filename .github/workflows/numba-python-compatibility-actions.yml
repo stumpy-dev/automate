@@ -1,4 +1,6 @@
 name: Numba-Python Compatibility Check
+# Only run this workflow manualy when a new Python major version is released
+# and available on Github Actions
 on:
   workflow_dispatch:
   #schedule:
