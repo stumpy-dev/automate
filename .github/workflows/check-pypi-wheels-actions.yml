@@ -69,5 +69,5 @@ jobs:
         with:
           repository: stumpy-dev/stumpy
       - name: Run Unit Tests
-        run: ./test.sh
+        run: ./test.sh unit
         shell: bash
