@@ -1,4 +1,4 @@
-name: Check pyfftw
+name: Check pyFFTW
 on:
   workflow_dispatch:
   schedule:
@@ -8,59 +8,52 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-    
+        os: [ubuntu-latest, macos-latest, windows-latest]
+  
     steps:
       - name: Checkout STUMPY
         uses: actions/checkout@v4
         with:
           repository: stumpy-dev/stumpy
-     
+
       - name: Get Required Python Version
         id: python
         run: |
           python -m pip install pandas packaging lxml
           echo "version=$(python ./versions.py -pkg pyfftw)" >> $GITHUB_OUTPUT
         shell: bash
-      
+
+      # Checkout python version
       - name: Set Up Python
         uses: actions/setup-python@v5
         with:
           python-version: "${{ steps.python.outputs.version }}"
-      
+
       - name: Display Python Version
         run: python -c "import sys; print(sys.version)"
         shell: bash
-      
-      - name: Upgrade Pip
-        run: python -m pip install --upgrade pip
-        shell: bash
-      
-      - name: Checkout STUMPY Again
-        uses: actions/checkout@v4
+
+      - name: Set Up Pixi
+        uses: prefix-dev/setup-pixi@v0.9.4
         with:
-          repository: stumpy-dev/stumpy
-      
-      - name: Install STUMPY And Other Dependencies
-        run: python -m pip install --editable .[ci]
-        shell: bash
-      
-      - name: Install FFTW on Ubuntu
-        if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get install libfftw3-dev
+          pixi-version: v0.62.2
 
-      - name: Install FFTW on macOS
-        if: matrix.os == 'macos-latest'
-        run: brew install fftw
-        
-      - name: Install pyfftw
-        run: python -m pip install --upgrade pyfftw
+      - name: Set Up Python
+        run: pixi add python="${{ steps.python.outputs.version }}"
         shell: bash
-        
+
+      - name: Install Conda-Forge STUMPY from source
+        run: pixi add stumpy
+        shell: bash
+
+      - name: Display Python Version
+        run: pixi run python -c "import sys; print(sys.version)"
+        shell: bash
+
       - name: Show Full Numba Environment
-        run: python -m numba -s
+        run: pixi run python -m numba -s
         shell: bash
 
-      - name: Run Unit Tests for sdp module
-        run: ./test.sh custom 1 tests/test_sdp.py
+      - name: Run Unit Tests
+        run: pixi run bash ./test.sh unit
         shell: bash
