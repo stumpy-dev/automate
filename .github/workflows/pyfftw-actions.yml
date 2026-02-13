@@ -54,6 +54,10 @@ jobs:
         run: pixi run python -m numba -s
         shell: bash
 
+      - name: Show pixi installed packages
+        run: pixi list
+        shell: bash
+
       - name: Run Unit Tests
         run: pixi run bash ./test.sh unit
         shell: bash
