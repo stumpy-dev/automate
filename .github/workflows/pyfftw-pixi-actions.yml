@@ -1,4 +1,4 @@
-name: Check Conda-Forge Builds
+name: Check pyfftw with Pixi
 on:
   workflow_dispatch:
   schedule:
