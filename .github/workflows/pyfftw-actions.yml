@@ -57,8 +57,8 @@ jobs:
         run: pixi run python -m numba -s
         shell: bash
 
-      - name: Show pixi installed packages
-        run: pixi list
+      - name: Show installed packages fftw and pyfftw
+        run: pixi list | grep -E 'fftw|pyfftw'
         shell: bash
 
       - name: Run Unit Tests
