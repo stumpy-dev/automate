@@ -43,7 +43,10 @@ jobs:
         shell: bash
 
       - name: Install Conda-Forge STUMPY from source
-        run: pixi add stumpy
+        run: pixi add stumpy 
+        
+      - name: Install FFTW and pyFFTW
+        run: pixi add fftw pyfftw
         shell: bash
 
       - name: Display Python Version
