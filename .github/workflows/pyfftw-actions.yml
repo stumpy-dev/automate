@@ -55,5 +55,5 @@ jobs:
         shell: bash
 
       - name: Install STUMPY And Run Unit Tests
-        run: pixi run -vvv bash ./test.sh unit
+        run: pixi run bash ./test.sh unit
         shell: bash
