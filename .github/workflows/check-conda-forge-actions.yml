@@ -37,7 +37,7 @@ jobs:
         with:
           repository: stumpy-dev/stumpy
       - name: Prevent STUMPY Source Installation
-        run: sed -i.BAK '/^\[tool\.pixi\.activation/,+2d' pyproject.toml && rm -rf pyproject.toml.BAK
+        run: sed -i.BAK '/^\[tool\.pixi\.activation/,+4d' pyproject.toml && rm -rf pyproject.toml.BAK
         shell: bash
       - name: Display PyProject.toml
         run: cat pyproject.toml
