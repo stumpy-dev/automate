@@ -17,7 +17,7 @@ jobs:
       - name: Get Required Python Version
         id: python
         run: |
-          python -m pip install pandas packaging lxml
+          python -m pip install pandas packaging lxml docutils
           echo "version=$(python ./versions.py -pkg ray)" >> $GITHUB_OUTPUT
         shell: bash
       - uses: actions/checkout@v4
