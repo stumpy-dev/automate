@@ -14,7 +14,7 @@ jobs:
     if: |
       !contains(github.event.pull_request.body, '# Pull Request Checklist')
     steps:
-      - name: Close Invalid Pull Request
+      - name: Close Invalid Pull Requests
         run: |
           gh pr close "$PR_NUMBER" --comment "$COMMENT"
         env:
