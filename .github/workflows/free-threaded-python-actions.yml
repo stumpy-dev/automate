@@ -1,0 +1,37 @@
+name: Check Free-Threaded Python
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 14 * * *'
+permissions:
+  contents: read
+jobs:
+  check_free_threaded_python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout STUMPY
+        uses: actions/checkout@v4
+        with:
+          repository: stumpy-dev/stumpy
+      - name: Set Up Free-Threaded Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          freethreaded: true
+          check-latest: true
+      - name: Install STUMPY and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --editable '.[ci]'
+      - name: Verify free-threaded Python with the GIL disabled
+        shell: python
+        run: |
+          import sys
+          import sysconfig
+
+          print(sys.version, flush=True)
+          assert sysconfig.get_config_var("Py_GIL_DISABLED") == 1, "Expected a free-threaded Python build"
+          assert not sys._is_gil_enabled(), "Expected a free-threaded interpreter with the GIL disabled"
+      - name: Run Unit Tests
+        run: ./test.sh unit
+        shell: bash
