@@ -52,5 +52,8 @@ jobs:
           assert sysconfig.get_config_var("Py_GIL_DISABLED") == 1, "Expected a free-threaded Python build"
           assert not sys._is_gil_enabled(), "Expected a free-threaded interpreter with the GIL disabled"
       - name: Run Unit Tests
+        env:
+          # Avoid crashes in Dask's frame-sampling profiler on free-threaded Python.
+          DASK_DISTRIBUTED__WORKER__PROFILE__ENABLED: 'false'
         run: ./test.sh unit
         shell: bash
